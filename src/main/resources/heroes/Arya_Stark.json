@@ -1,0 +1,42 @@
+{
+    "name": "Arya Stark",
+    "house": "Stark",
+    "wayPoints": [
+        {
+          "x": 301,
+          "y": 803.5,
+          "velocity": 1,
+          "delayMillis": 15000
+        },
+        {
+          "x": 304,
+          "y": 741.5,
+          "velocity": 1,
+          "delayMillis": 1000
+        },
+        {
+          "x": 304,
+          "y": 685.5,
+          "velocity": 1,
+          "delayMillis": 1000
+        },
+        {
+          "x": 300,
+          "y": 620.5,
+          "velocity": 1,
+          "delayMillis": 1000
+        },
+        {
+          "x": 341,
+          "y": 558.5,
+          "velocity": 1,
+          "delayMillis": 1000
+        },
+        {
+          "x": 368,
+          "y": 460.5,
+          "velocity": 1,
+          "delayMillis": 1000
+        }
+      ]
+}

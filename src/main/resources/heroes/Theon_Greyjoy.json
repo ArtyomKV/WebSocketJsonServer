@@ -1,0 +1,17 @@
+{
+    "name": "Theon Greyjoy",
+    "house": "Greyjoy",
+    "wayPoints": [
+       {
+       "x": 302.1,
+       "y": 802.1,
+       "velocity": 1.0,
+       "delayMillis": 1000
+       },{
+        "x": 302.2,
+        "y": 802.2,
+        "velocity": 1.0,
+        "delayMillis": 1000
+        }
+    ]
+}

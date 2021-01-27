@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/real_trac_wedsocket
+    username: postgres
+    password: postgres
+    initialization-mode: always
+    schema: classpath*:database/initDB.sql
+  jpa:
+    properties:
+      hibernate:
+        show_sql: false
+        temp:
+          use_jdbc_metadata_defaults: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+server:
+  port: 8090
