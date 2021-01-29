@@ -2,7 +2,6 @@ package com.realtrac.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.realtrac.MySessionSingleton;
 import com.realtrac.endpoints.Endpoint;
 import com.realtrac.entities.Hero;
 import com.realtrac.entities.WayPoint;
@@ -10,6 +9,7 @@ import com.realtrac.models.LocationPackage;
 import com.realtrac.repositories.HeroRepositories;
 import com.realtrac.repositories.WayPointRepositories;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.glassfish.tyrus.server.Server;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +20,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.websocket.Session;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,16 +29,16 @@ import java.util.List;
 @Slf4j
 @Service
 @NoArgsConstructor
+@Setter
 public class WebSockServer implements ApplicationRunner {
 
     HeroRepositories heroRepositories;
     WayPointRepositories wayPointRepositories;
 
-    Session session = null;
+    public static Session session = null;
     Endpoint endpoint = null;
     private int i = 0;
     private List<Hero> heroes = new ArrayList<>();
-    private List<List<WayPoint>> pointList = new ArrayList<>();
 
     @Autowired
     public WebSockServer(HeroRepositories heroRepositories, WayPointRepositories wayPointRepositories) {
@@ -61,10 +59,9 @@ public class WebSockServer implements ApplicationRunner {
             try {
                 Hero hero = mapper.readValue(file, Hero.class);
                 heroes.add(hero);
-//                Hero savedHero = heroRepositories.save(hero);
+//                Hero savedHero = heroRepositories.save(hero);  //раскомментировать при первом запуске (сохранение данных о героях в БД)
                 List<WayPoint> wayPoints = hero.getWayPoints();
-                pointList.add(wayPoints);
-//                for (WayPoint point : wayPoints) {
+//                for (WayPoint point : wayPoints) {  //раскомментировать при первом запуске (сохранение геоданных в БД)
 //                    point.setHero(savedHero);
 //                    wayPointRepositories.save(point);
 //                }
@@ -77,11 +74,9 @@ public class WebSockServer implements ApplicationRunner {
     }
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         log.info("I am starting...");
         runServer();
-        log.info("{}", MySessionSingleton.getInstance(null).session);
-        session = MySessionSingleton.getInstance(null).session;
         log.info("{}", session);
         endpoint = new Endpoint();
         endpoint.setUserSession(session);
@@ -92,15 +87,11 @@ public class WebSockServer implements ApplicationRunner {
         log.info("Стартую сервер...");
         try {
             server.start();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            System.out.print("Please press a key after open session");
-            reader.readLine();
+            while (session == null){
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        finally {
-//            server.stop();
-//        }
     }
 
     @Scheduled(fixedDelay = 1000)
@@ -130,6 +121,5 @@ public class WebSockServer implements ApplicationRunner {
             log.info("Пока ничего не делаю каждую секунду)))");
         }
     }
-
 
 }
