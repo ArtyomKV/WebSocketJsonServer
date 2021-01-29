@@ -14,4 +14,4 @@ spring:
           use_jdbc_metadata_defaults: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 server:
-  port: 8090
+  port: 8080
